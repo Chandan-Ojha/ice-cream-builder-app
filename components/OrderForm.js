@@ -3,6 +3,10 @@ app.component("order-form",{
         cart: {
             type: Array,
             required: true
+        },
+        total: {
+            type: Number,
+            required: true
         }
     },
     template:
@@ -28,6 +32,7 @@ app.component("order-form",{
                     placeholder="Phone no."
                 />
                 </li>
+                <li>
                 <input
                     type="hidden"
                     v-model.number="total"
@@ -49,9 +54,27 @@ app.component("order-form",{
         </div>
         </div>
     </div>`,
+    data() {
+        return {
+            name: '',
+            phone: '',
+            address: ''
+        }
+    },
     methods: {
         hideOrderForm(){
             this.$emit("toggle-order-form");
+        },
+        onSubmit() {
+            let orderDetails = {
+                name: this.name,
+                phone: this.phone,
+                address: this.address,
+                total: this.total
+            }
+            console.log(orderDetails);
+            this.hideOrderForm();
+            this.$emit("clear-cart");
         }
     }
 
